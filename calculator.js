@@ -1,6 +1,6 @@
 const body = document.querySelector("body");
 
-const expression = [""];
+const expression = [];
 let compound = "";
 
 const operators = ["+", "-", "*", "/", "="];
@@ -36,7 +36,6 @@ function onKeyPress(e) {
     while (expression.length > 0) {
       expression.pop();
     }
-    expression[0] = "";
     return;
   }
 
