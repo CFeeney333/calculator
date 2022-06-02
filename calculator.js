@@ -1,6 +1,7 @@
 const body = document.querySelector("body");
 
 const expression = [];
+let compound = "";
 
 const operators = ["+", "-", "*", "/", "="];
 const digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
@@ -22,8 +23,28 @@ for (let op of operators) {
 }
 
 function onKeyPress(e) {
-  if (e.target.id === "=") {
+  const id = e.target.id;
+  if (id === "=") {
+    // maybe compound contains a number
+    if (compound !== "") {
+      expression.push(compound);
+    }
     evaluate();
+    // after evaluation empty the expression array
+    while (expression.length > 0) {
+      expression.pop();
+    }
+  }
+
+  // push the compound to expression if the next input is an operator and set it to empty string
+  // otherwise concatenate the digit to the compound
+  // if it is an operator then push the operator
+  if (digits.includes(id)) {
+    compound = compound + id;
+  } else if (operators.includes(id)) {
+    expression.push(compound);
+    expression.push(id);
+    compound = "";
   }
 }
 
@@ -56,4 +77,6 @@ function operate(operator, a, b) {
   }
 }
 
-function evaluate() {}
+function evaluate() {
+  console.log(expression);
+}
