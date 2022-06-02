@@ -24,14 +24,20 @@ for (let op of operators) {
 
 function onKeyPress(e) {
   const id = e.target.id;
+
   // the first element may not be
   if (id === "=") {
     // maybe compound contains a number
     if (compound !== "") {
       expression.push(compound);
       compound = "";
+    } else {
+      // the last element is an operator and it must be removed
+      expression.pop();
     }
-    evaluate();
+
+    console.log(evaluate());
+
     // after evaluation empty the expression array
     while (expression.length > 0) {
       expression.pop();
@@ -39,7 +45,8 @@ function onKeyPress(e) {
     return;
   }
 
-  // push the compound to expression if the next input is an operator and set it to empty string
+  // push the compound to expression if the next input is an operator and
+  // set it to empty string
   // otherwise concatenate the digit to the compound
   // if it is an operator then push the operator
   if (digits.includes(id)) {
@@ -67,7 +74,7 @@ function divide(a, b) {
   return a / b;
 }
 
-function operate(operator, a, b) {
+function operate(a, operator, b) {
   switch (operator) {
     case "+":
       return add(a, b);
@@ -82,4 +89,12 @@ function operate(operator, a, b) {
 
 function evaluate() {
   console.log(expression);
+  // expression always in the form [number, operator, number, operator, number]
+  while (expression.length !== 1) {
+    const operation = expression.splice(0, 3);
+    expression.unshift(
+      operate(Number(operation[0]), operation[1], Number(operation[2]))
+    );
+  }
+  return expression[0];
 }
