@@ -1,6 +1,6 @@
 const body = document.querySelector("body");
 
-const expression = [];
+const expression = [""];
 let compound = "";
 
 const operators = ["+", "-", "*", "/", "="];
@@ -24,16 +24,20 @@ for (let op of operators) {
 
 function onKeyPress(e) {
   const id = e.target.id;
+  // the first element may not be
   if (id === "=") {
     // maybe compound contains a number
     if (compound !== "") {
       expression.push(compound);
+      compound = "";
     }
     evaluate();
     // after evaluation empty the expression array
     while (expression.length > 0) {
       expression.pop();
     }
+    expression[0] = "";
+    return;
   }
 
   // push the compound to expression if the next input is an operator and set it to empty string
