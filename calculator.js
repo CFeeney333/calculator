@@ -2,16 +2,19 @@ const body = document.querySelector("body");
 
 const expression = [];
 
-for (let i = 0; i < 10; i++) {
-  const element = document.createElement("div");
+const operators = ["+", "-", "*", "/", "="];
+const digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+for (let i of digits) {
+  const element = document.createElement("button");
   element.textContent = i;
   element.id = i;
   element.addEventListener("click", onKeyPress);
   body.appendChild(element);
 }
 
-for (let op of ["+", "-", "*", "/", "="]) {
-  const element = document.createElement("div");
+for (let op of operators) {
+  const element = document.createElement("button");
   element.textContent = op;
   element.id = op;
   element.addEventListener("click", onKeyPress);
@@ -19,7 +22,9 @@ for (let op of ["+", "-", "*", "/", "="]) {
 }
 
 function onKeyPress(e) {
-  expression.push(e.target.id);
+  if (e.target.id === "=") {
+    evaluate();
+  }
 }
 
 function add(a, b) {
@@ -50,3 +55,5 @@ function operate(operator, a, b) {
       return divide(a, b);
   }
 }
+
+function evaluate() {}
